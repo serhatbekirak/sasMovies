@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sasMovie/helpers/utilities.dart';
 import 'package:sasMovie/models/movieModel.dart';
-import 'package:sasMovie/sceens/movie_detail/detail_main.dart';
+import 'package:sasMovie/ui/movie_detail/detail_main.dart';
 import 'package:sasMovie/widgets/CarouselImageWidget/CarouselImageModel.dart';
 import 'package:sasMovie/widgets/CarouselImageWidget/CarouselImageWidget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';

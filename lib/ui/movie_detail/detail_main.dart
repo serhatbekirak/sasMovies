@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sasMovie/api/core/APIResponse.dart';
 import 'package:sasMovie/blocs/movieDetailBloc.dart';
+import 'package:sasMovie/helpers/colors.dart';
 import 'package:sasMovie/models/movieDetailModel.dart';
-import 'package:sasMovie/sceens/movie_detail/detail_content.dart';
+import 'package:sasMovie/ui/movie_detail/detail_content.dart';
 import 'package:sasMovie/widgets/LoadingCenter.dart';
 import 'package:sasMovie/widgets/TextCenter.dart';
 
@@ -32,6 +33,7 @@ class _MovieDetailState extends State<MovieDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        color: darkBg,
         child: StreamBuilder<APIResponse<MovieDetailModel>>(
           stream: _bloc.dataStream,
           builder:

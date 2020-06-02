@@ -1,22 +1,37 @@
 import 'dart:async';
 import 'package:sasMovie/api/core/APIResponse.dart';
+import 'package:sasMovie/api/requests/creditsRequest.dart';
 import 'package:sasMovie/api/requests/detailRequest.dart';
+import 'package:sasMovie/models/MovieCreditModel.dart';
 import 'package:sasMovie/models/movieDetailModel.dart';
 
 class MovieDetailBloc {
   DetailRequest _detailRequest;
-  StreamController _dataController;
+  CreditsRequest _creditsRequest;
+  StreamController _detailController;
+  StreamController _creditsController;
   bool _isStreaming;
 
-  StreamSink<APIResponse<MovieDetailModel>> get dataSink => _dataController.sink;
+  StreamSink<APIResponse<MovieDetailModel>> get dataSink =>
+      _detailController.sink;
 
-  Stream<APIResponse<MovieDetailModel>> get dataStream => _dataController.stream;
+  Stream<APIResponse<MovieDetailModel>> get dataStream =>
+      _detailController.stream;
+
+  StreamSink<APIResponse<MovieCreditModel>> get creditsSink =>
+      _creditsController.sink;
+
+  Stream<APIResponse<MovieCreditModel>> get creditStream =>
+      _creditsController.stream;
 
   MovieDetailBloc(int movieId) {
-    _dataController = StreamController<APIResponse<MovieDetailModel>>();
+    _detailController = StreamController<APIResponse<MovieDetailModel>>();
+    _creditsController = StreamController<APIResponse<MovieCreditModel>>();
     _detailRequest = DetailRequest();
+    _creditsRequest = CreditsRequest();
     _isStreaming = true;
     fetchDetail(movieId);
+    // fetchCredist(movieId);
   }
 
   fetchDetail(int movieId) async {
@@ -33,8 +48,23 @@ class MovieDetailBloc {
     }
   }
 
+  fetchCredist(int movieId) async {
+    creditsSink.add(APIResponse.loading('Getting a Credists!'));
+    try {
+      MovieCreditModel movieDetail =
+          await _creditsRequest.fetchCredits(movieId);
+      if (_isStreaming) {
+        creditsSink.add(APIResponse.completed(movieDetail));
+      }
+    } catch (e) {
+      if (_isStreaming) {
+        creditsSink.add(APIResponse.error(e.toString()));
+      }
+    }
+  }
+
   dispose() {
     _isStreaming = false;
-    _dataController?.close();
+    _detailController?.close();
   }
 }

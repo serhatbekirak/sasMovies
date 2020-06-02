@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sasMovie/sceens/movie_list/list_main.dart';
+import 'ui/movie_list/list_main.dart';
 
 void main() => runApp(MyApp());
 

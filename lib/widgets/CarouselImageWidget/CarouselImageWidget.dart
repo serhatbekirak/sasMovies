@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sasMovie/helpers/utilities.dart';
+import 'package:sasMovie/ui/movie_detail/detail_main.dart';
 import 'package:sasMovie/widgets/CarouselImageWidget/CarouselImageModel.dart';
 
 class CarouselImageWidget extends StatefulWidget {
@@ -38,16 +39,31 @@ class _CarouselImageWidgetState extends State<CarouselImageWidget> {
 
   CarouselSlider carouselSliderWidget() {
     return CarouselSlider(
-      items: list.map((item) => imageCard(item.imagePath, 20.0)).toList(),
+      items: list
+          .map(
+            (item) => GestureDetector(
+              child: imageCard(item.imagePath, 20.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MovieDetail(movieId: item.id),
+                  ),
+                );
+              },
+            ),
+          )
+          .toList(),
       options: CarouselOptions(
-          autoPlay: true,
-          enlargeCenterPage: true,
-          aspectRatio: 2.0,
-          onPageChanged: (index, reason) {
-            setState(() {
-              current = index;
-            });
-          }),
+        autoPlay: false,
+        enlargeCenterPage: true,
+        aspectRatio: 2.0,
+        onPageChanged: (index, reason) {
+          setState(() {
+            current = index;
+          });
+        },
+      ),
     );
   }
 
